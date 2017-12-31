@@ -1,6 +1,6 @@
 # React Native Application to work with the Lyft api
 
-This application was made as a boilerplate application to work with the Lyft API. Special thanks to [Nick Diaz] (https://github.com/wuno) on the fork. It uses React Native and handles the **3 Leg Flow** for **Oauth2** authentication described in the Lyft API Documentation. You can find that documentation here
+This application was made as a boilerplate application to work with the Lyft API. Special thanks to [Nick Diaz](https://github.com/wuno) on the fork. It uses React Native and handles the **3 Leg Flow** for **Oauth2** authentication described in the Lyft API Documentation. You can find that documentation here
 
 https://developer.lyft.com/v1/docs/authentication
 
