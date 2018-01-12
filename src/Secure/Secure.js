@@ -5,8 +5,11 @@ import {
   Text,
   Button,
   AsyncStorage,
+  TouchableHighlight,
+  Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import RootNavigation from '../Components/Navigation/RootNavigation';
 
 const Secure = (props) => {
   const logoutUser = () => {
@@ -19,11 +22,18 @@ const Secure = (props) => {
     });
   };
 
+  const { navPage } = RootNavigation;
+
   return (
     <View style={styles.container}>
-      <Text style={styles.welcome}>
-        THIS IS THE SECURE PAGE YOU MUST HAVE A TOKEN!
-      </Text>
+      <TouchableHighlight onPress={() => navPage('ProfilePage')}>
+        <Image
+          source={require('../assets/bananaVar1.jpg')}
+          style={styles.profilePic}
+        />
+      </TouchableHighlight>
+      <Text style={{ fontSize: 30, fontStyle: 'italic' }}>Arrive</Text>
+      <Text style={{ fontSize: 30, fontStyle: 'italic' }}>      Alive </Text>
       <Button
         title="Destroy Lyft Session"
         onPress={() => logoutUser()}
@@ -40,10 +50,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
     paddingTop: 30,
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  profilePic: {
+    width: 200,
+    height: 200,
+    borderRadius: 30,
   },
 });
 
