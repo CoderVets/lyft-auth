@@ -1,18 +1,14 @@
-import React, {Component} from 'react';
-import { View,
-    StyleSheet,
-    TextInput,
-    ScrollView,
-    ViewStylePropTypes,
-    ScrollViewStyle,
-    ContentContainerStyle,
-    StyleSheetProperties,
-} from 'react-native' 
+import React, { Component } from 'react';
+import {
+  StyleSheet,
+  TextInput,
+  ScrollView,
+} from 'react-native';
 
-export default class ProfilePage extends React.Component {
-    render() {
-        return (
-            <ScrollView contentContainerStyle={styles.container}>
+export default class ProfilePage extends Component {
+  render() {
+    return (
+      <ScrollView contentContainerStyle={styles.container}>
                 <TextInput
                     style={styles.inputName}
                     placeholder="Name"

@@ -9,9 +9,8 @@ import {
   Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import RootNavigation from '../Components/Navigation/RootNavigation';
 
-const Secure = (props) => {
+const Secure = (props, { navigation }) => {
   const logoutUser = () => {
     const tokenKey = 'LYFT-TOKEN';
     AsyncStorage.removeItem(tokenKey, (err) => {
@@ -22,11 +21,9 @@ const Secure = (props) => {
     });
   };
 
-  const { navPage } = RootNavigation;
-
   return (
     <View style={styles.container}>
-      <TouchableHighlight onPress={() => navPage('ProfilePage')}>
+      <TouchableHighlight onPress={() => navigation.navigate('ProfilePage')}>
         <Image
           source={require('../assets/bananaVar1.jpg')}
           style={styles.profilePic}
