@@ -9,8 +9,10 @@ import {
   Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import store from '../Store/Store';
+import etaAccesToken from '../Store/Actions/User';
 
-const Secure = (props, { navigation }) => {
+const Secure = (props /* { navigation } */) => {
   const logoutUser = () => {
     const tokenKey = 'LYFT-TOKEN';
     AsyncStorage.removeItem(tokenKey, (err) => {
@@ -21,9 +23,14 @@ const Secure = (props, { navigation }) => {
     });
   };
 
+
+  store.dispatch(etaAccesToken('PbUe5NjrXqQP', 'EmdVlwuj4TMBEDx-9ESOMNaBCKYvjZIT'));
+
+  // this.navigation.navigate = this.props.navigation.bind(this);
+
   return (
     <View style={styles.container}>
-      <TouchableHighlight onPress={() => navigation.navigate('ProfilePage')}>
+      <TouchableHighlight onPress={() => props.navigation.navigate('ProfilePage')}>
         <Image
           source={require('../assets/bananaVar1.jpg')}
           style={styles.profilePic}
@@ -31,6 +38,7 @@ const Secure = (props, { navigation }) => {
       </TouchableHighlight>
       <Text style={{ fontSize: 30, fontStyle: 'italic' }}>Arrive</Text>
       <Text style={{ fontSize: 30, fontStyle: 'italic' }}>      Alive </Text>
+      <Text>{props.screenProps.eta}</Text>
       <Button
         title="Destroy Lyft Session"
         onPress={() => logoutUser()}
@@ -56,7 +64,11 @@ const styles = StyleSheet.create({
 
 Secure.propTypes = {
   navigation: PropTypes.shape({ navigate: PropTypes.func }),
-  screenProps: PropTypes.shape({ login: PropTypes.func }),
+  // screenProps: PropTypes.shape({ login: PropTypes.func }),
+  screenProps: PropTypes.shape({
+    login: PropTypes.func,
+    eta: PropTypes.any,
+  }),
 };
 
 Secure.navigationOptions = () => ({ header: null });
