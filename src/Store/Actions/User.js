@@ -5,6 +5,7 @@ export const RECIEVE_USER = 'RECEIVE_USER';
 export const FETCHING = 'FETCHING';
 export const ETA_ACC_TOKEN = 'ETA_ACC_TOKEN';
 export const CANCEL_FETCHING = 'CANCEL_FETCHING'
+export const ADD_ERROR = 'ADD_ERROR'
 
 //export const GET_LOC = 'GET_LOC';
 
@@ -40,14 +41,18 @@ export function recieveUser(user) {
   };
 } */
 
+export const addError = (message) => ({
+  type: ADD_ERROR,
+  payload: message,
+})
 
-export const etaAccesToken = (ClientID, ClientSecret) => dispatch => {
+export const etaAccesToken = (ClientID, ClientSecret) => dispatch => ({
 
 	dispatch({
 		type: FETCHING
 	})
 
-	fetch('https://api.lyft.com/oauth/token',{
+  fetch('https://api.lyft.com/oauth/token',{
     method: 'Post',
     headers: {
         'Content-Type':'application/json',
@@ -57,25 +62,26 @@ export const etaAccesToken = (ClientID, ClientSecret) => dispatch => {
         "grant_type":"client_credentials",
         "scope":"public"
     })
-		.then(response => response.json())
-		.then(respJson => {
+  })
+  .then(response => response.json())
+  .then(respJson => {
 
-			dispatch({
-				type: ETA_ACC_TOKEN,
-				payload: respJson.access_token
-			})
+    dispatch({
+      type: ETA_ACC_TOKEN,
+      payload: respJson.access_token
+    })
 
-		})
-		.catch(error => {
+  })
+  .catch(error => {
 
-			dispatch(
-				addError(error.message)
-			)
+    dispatch(
+      addError(error.message)
+    )
 
-			dispatch({
-				type: CANCEL_FETCHING
-			})
+    dispatch({
+      type: CANCEL_FETCHING
+    })
 
-		})
-  }),
-}
+  })
+  
+})
