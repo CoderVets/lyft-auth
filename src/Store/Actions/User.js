@@ -6,6 +6,7 @@ export const FETCHING = 'FETCHING';
 export const ETA_ACC_TOKEN = 'ETA_ACC_TOKEN';
 export const CANCEL_FETCHING = 'CANCEL_FETCHING'
 export const ADD_ERROR = 'ADD_ERROR'
+export const CLEAR_ERROR = 'CLEAR_ERROR'
 
 //export const GET_LOC = 'GET_LOC';
 
@@ -46,7 +47,12 @@ export const addError = (message) => ({
   payload: message,
 })
 
-export const etaAccesToken = (ClientID, ClientSecret) => dispatch => ({
+export const clearError = index => ({
+  type: CLEAR_ERROR,
+  payload: index
+})
+
+export const etaAccesToken = (ClientID, ClientSecret) => dispatch => {
 
 	dispatch({
 		type: FETCHING
@@ -84,4 +90,4 @@ export const etaAccesToken = (ClientID, ClientSecret) => dispatch => ({
 
   })
   
-})
+}
