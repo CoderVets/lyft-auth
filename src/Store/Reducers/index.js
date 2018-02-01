@@ -5,5 +5,5 @@ import rootReducer from './reducers';
 
 export default combineReducers({
   User,
-  rootReducer,
+  //rootReducer,
 });

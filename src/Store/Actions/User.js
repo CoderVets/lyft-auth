@@ -71,11 +71,13 @@ export const etaAccesToken = (ClientID, ClientSecret) => dispatch => {
   })
   .then(response => response.json())
   .then(respJson => {
-
+    
+    console.log(respJson.access_token)
     dispatch({
       type: ETA_ACC_TOKEN,
       payload: respJson.access_token
-    })
+      
+    });
 
   })
   .catch(error => {

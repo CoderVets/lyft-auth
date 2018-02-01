@@ -9,8 +9,9 @@ import {
   Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import store from '../Store/Store';
-import etaAccesToken from '../Store/Actions/User';
+import { store } from '../Store/Store';
+import { etaAccesToken } from '../Store/Actions/User';
+import { connect } from 'react-redux'
 
 const Secure = (props /* { navigation } */) => {
   const logoutUser = () => {
@@ -23,22 +24,25 @@ const Secure = (props /* { navigation } */) => {
     });
   };
 
-
-  store.dispatch(etaAccesToken('PbUe5NjrXqQP', 'EmdVlwuj4TMBEDx-9ESOMNaBCKYvjZIT'));
-
+  const getETAToken = etaAccesToken => {
+    store.dispatch(
+      etaAccesToken('PbUe5NjrXqQP', 'EmdVlwuj4TMBEDx-9ESOMNaBCKYvjZIT')
+    );
+  }
   // this.navigation.navigate = this.props.navigation.bind(this);
+  window.addEventListener("focus",getETAToken)
 
   return (
     <View style={styles.container}>
       <TouchableHighlight onPress={() => props.navigation.navigate('ProfilePage')}>
         <Image
-          source={require('../assets/bananaVar1.jpg')}
+          source={require('../assets/arrive-alive.jpg')}
           style={styles.profilePic}
         />
       </TouchableHighlight>
       <Text style={{ fontSize: 30, fontStyle: 'italic' }}>Arrive</Text>
       <Text style={{ fontSize: 30, fontStyle: 'italic' }}>      Alive </Text>
-      <Text>{props.screenProps.eta}</Text>
+      <Text>ETA{props.screenProps.eta}</Text>
       <Button
         title="Destroy Lyft Session"
         onPress={() => logoutUser()}
@@ -73,4 +77,14 @@ Secure.propTypes = {
 
 Secure.navigationOptions = () => ({ header: null });
 
-export default Secure;
+const mapStateToProps = state => ({ getEtaAccToken: state.getEtaAccToken });
+
+const mapDispatchToProps = dispatch => ({
+  eta: getEtaAccToken => dispatch(eta(getEtaAccToken)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Secure);
+
+//export default connect(mapStateToProps)(Secure);
+
+//export default Secure;

@@ -68,4 +68,12 @@ class Main extends Component {
 
 Main.navigationOptions = () => ({ header: null });
 
+/* const mapStateToProps = state => ({ user: state.user });
+
+const mapDispatchToProps = dispatch => ({
+  recieveUser: user => dispatch(recieveUser(user)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main); */
+
 export default Main;
