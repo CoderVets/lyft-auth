@@ -9,9 +9,16 @@ import {
   Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { store } from '../Store/Store';
-import { etaAccesToken } from '../Store/Actions/User';
+import storeFactory from '../Store/Store';
+import {
+  etaAccesToken,
+  LyftETA
+} from '../Store/Actions/User';
 import { connect } from 'react-redux'
+
+const store = storeFactory();
+
+window.store = store;
 
 const Secure = (props /* { navigation } */) => {
   const logoutUser = () => {
@@ -24,13 +31,16 @@ const Secure = (props /* { navigation } */) => {
     });
   };
 
-  const getETAToken = etaAccesToken => {
+  store.dispatch(
+    LyftETA('c0ruHCEH66z0jr2doK3pKtPslNxJa3ERGVhSjItyfJZkFwnyfFemCpyZ81qjNnVyo0UyFh9folF9JAfVZ+ABfpMQa58RiHz6azgz8czR0UcwAPoJpUJwUi4=')
+    //etaAccesToken('PbUe5NjrXqQP', 'EmdVlwuj4TMBEDx-9ESOMNaBCKYvjZIT')
+  );
+  /* const getETAToken = etaAccesToken => {
     store.dispatch(
       etaAccesToken('PbUe5NjrXqQP', 'EmdVlwuj4TMBEDx-9ESOMNaBCKYvjZIT')
     );
-  }
+  } */
   // this.navigation.navigate = this.props.navigation.bind(this);
-  window.addEventListener("focus",getETAToken)
 
   return (
     <View style={styles.container}>
@@ -77,10 +87,11 @@ Secure.propTypes = {
 
 Secure.navigationOptions = () => ({ header: null });
 
-const mapStateToProps = state => ({ getEtaAccToken: state.getEtaAccToken });
+//map state to props & map dispatch to props
+const mapStateToProps = state => ({ LyftETA: state.LyftETA });
 
 const mapDispatchToProps = dispatch => ({
-  eta: getEtaAccToken => dispatch(eta(getEtaAccToken)),
+  eta: LyftETA => dispatch(eta(LyftETA)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Secure);

@@ -7,6 +7,7 @@ import {
   CLEAR_ERROR,
   GET_USER,
   RECIEVE_USER,
+  ETA,
 } from '../Actions/User';
 import { combineReducers } from 'redux'
 //import { ReducersMapObject } from 'redux';
@@ -21,6 +22,11 @@ const getEtaAccToken = (state = null, action) =>
   (action.type === ETA_ACC_TOKEN) ?
     action.payload :
     state;
+
+const getLyftETA = (state = null, action) =>
+(action.type === ETA) ?
+  action.payload :
+  state;
 
 const errors = (state=[], action) => {
   switch(action.type) {
@@ -70,17 +76,9 @@ const user = (state = {}, action) => {
   }
 };
 
-/*export const rootReducer = combineReducers(
-  getEtaAccToken,
-  errors,
-  fetching,
-  user,
-)
-
-export default rootReducer*/
-
 export default combineReducers({
   getEtaAccToken,
+  getLyftETA,
   errors,
   fetching,
   user,

@@ -7,6 +7,7 @@ export const ETA_ACC_TOKEN = 'ETA_ACC_TOKEN';
 export const CANCEL_FETCHING = 'CANCEL_FETCHING'
 export const ADD_ERROR = 'ADD_ERROR'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
+export const ETA = 'ETA'
 
 //export const GET_LOC = 'GET_LOC';
 
@@ -71,13 +72,17 @@ export const etaAccesToken = (ClientID, ClientSecret) => dispatch => {
   })
   .then(response => response.json())
   .then(respJson => {
-    
+    LyftETA(respJson.access_token)
     console.log(respJson.access_token)
     dispatch({
       type: ETA_ACC_TOKEN,
       payload: respJson.access_token
       
     });
+    //console.log('return')
+    //return AccToken = respJson.access_token
+    //console.log('LyftETA call')
+    //LyftETA(respJson.access_token)
 
   })
   .catch(error => {
@@ -93,3 +98,37 @@ export const etaAccesToken = (ClientID, ClientSecret) => dispatch => {
   })
   
 }
+
+export const LyftETA = (AccToken) => dispatch => {
+
+  dispatch({
+		type: FETCHING
+	})
+  
+  fetch('https://api.lyft.com/v1/eta?lat=38.790163&lng=-90.532173',{
+      method: 'get',
+      headers: {'Authorization': 'Bearer '+AccToken}
+  })
+  .then(response => response.json())
+  .then(respJson => {
+    
+    console.log(respJson.eta_estimates)
+    dispatch({
+      type: ETA,
+      payload: respJson.eta_estimates
+      
+    });
+
+  })
+  .catch(error => {
+
+    dispatch(
+      addError(error.message)
+    )
+
+    dispatch({
+      type: CANCEL_FETCHING
+    })
+
+  })
+};
