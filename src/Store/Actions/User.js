@@ -53,6 +53,63 @@ export const clearError = index => ({
   payload: index
 })
 
+/* export const etaAccesToken = (ClientID, ClientSecret) => dispatch => {
+
+	dispatch({
+		type: FETCHING
+	})
+
+  fetch('https://api.lyft.com/oauth/token',{
+    method: 'Post',
+    headers: {
+        'Content-Type':'application/json',
+        "Authorization":"Basic "+ base64.encode(ClientID + ":" + ClientSecret)
+    },
+    body:JSON.stringify ({
+        "grant_type":"client_credentials",
+        "scope":"public"
+    })
+  })
+  .then(response => response.json())
+  .then(respJson => {
+    console.log('LyftETA call')
+    //LyftETA(respJson.access_token)
+    console.log(respJson.access_token)
+    dispatch({
+      type: ETA_ACC_TOKEN,
+      payload: respJson.access_token
+      
+    });
+    console.log('return')
+    //return AccToken = respJson.access_token
+    //console.log('LyftETA call')
+    LyftETA(respJson.access_token).then(
+      //console.log('hi')
+      response => {
+        console.log(response)
+      },
+      error => {
+        //throw error
+        console.log('error')
+      }
+    )
+
+  })
+  
+  .catch(error => {
+
+    dispatch(
+      addError(error.message)
+    )
+
+    dispatch({
+      type: CANCEL_FETCHING
+    })
+
+  })
+  
+} */
+
 export const etaAccesToken = (ClientID, ClientSecret) => dispatch => {
 
 	dispatch({
@@ -72,19 +129,42 @@ export const etaAccesToken = (ClientID, ClientSecret) => dispatch => {
   })
   .then(response => response.json())
   .then(respJson => {
-    LyftETA(respJson.access_token)
-    console.log(respJson.access_token)
-    dispatch({
-      type: ETA_ACC_TOKEN,
-      payload: respJson.access_token
-      
-    });
-    //console.log('return')
-    //return AccToken = respJson.access_token
-    //console.log('LyftETA call')
+    console.log('LyftETA call')
     //LyftETA(respJson.access_token)
+    console.log(respJson.access_token)
+
+    fetch('https://api.lyft.com/v1/eta?lat=38.790163&lng=-90.532173&ride_type=lyft',{
+      method: 'get',
+      headers: {'Authorization': 'Bearer '+respJson.access_token}
+    })
+
+    .then(response => response.json())
+    .then(respJson => {
+      
+      console.log(respJson.eta_estimates)
+      dispatch({
+        type: ETA,
+        payload: respJson.eta_estimates
+        
+      });
 
   })
+    console.log('return')
+    //return AccToken = respJson.access_token
+    //console.log('LyftETA call')
+    LyftETA(respJson.access_token).then(
+      //console.log('hi')
+      response => {
+        console.log(response)
+      },
+      error => {
+        //throw error
+        console.log('error')
+      }
+    )
+
+  })
+  
   .catch(error => {
 
     dispatch(
@@ -97,9 +177,11 @@ export const etaAccesToken = (ClientID, ClientSecret) => dispatch => {
 
   })
   
-}
+} 
 
-export const LyftETA = (AccToken) => dispatch => {
+/* export const LyftETA = (AccToken) => dispatch => {
+
+  console.log('LyftETA call 2')
 
   dispatch({
 		type: FETCHING
@@ -131,4 +213,4 @@ export const LyftETA = (AccToken) => dispatch => {
     })
 
   })
-};
+}; */

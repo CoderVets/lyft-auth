@@ -18,15 +18,38 @@ import { combineReducers } from 'redux'
         state,
 }; */
 
+//may need to make changes to getEtaAccToken
 const getEtaAccToken = (state = null, action) =>
   (action.type === ETA_ACC_TOKEN) ?
     action.payload :
     state;
 
-const getLyftETA = (state = null, action) =>
+//need to make changes to getLyftETA
+/* const getLyftETA = (state = {}, action) =>
 (action.type === ETA) ?
   action.payload :
-  state;
+  state; */
+
+const getLyftETA = (state = {}, action) => {
+  let newState;
+  switch (action.type) {
+    case ETA:
+      console.log('THIS IS THE REDUCER FIRING WE HAVE A REDUX STORE');
+      //console.log(action)
+      newState = {
+        etaSeconds: action.payload[0].eta_seconds,
+        /*expires_in: action.user.data.refresh_token,
+        refresh_token: action.user.data.token_type,
+        token_type: action.user.data.expires_in,
+        scope: action.user.data.scope,*/
+      };
+      console.log('THIS IS THE NEW USER STATE');
+      console.log(newState);
+      return newState;
+    default:
+      return state;
+  }
+};
 
 const errors = (state=[], action) => {
   switch(action.type) {
