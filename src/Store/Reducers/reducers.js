@@ -31,6 +31,7 @@ const getEtaAccToken = (state = null, action) =>
   state; */
 
 const getLyftETA = (state = {}, action) => {
+
   let newState;
   switch (action.type) {
     case ETA:
@@ -65,7 +66,7 @@ const errors = (state=[], action) => {
   }
 };
 
-const fetching = (state = false, action) => {
+const fetching = (state = true, action) => {
   switch (action.type) {
     case FETCHING:
       return true;

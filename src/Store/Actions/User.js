@@ -130,7 +130,6 @@ export const etaAccesToken = (ClientID, ClientSecret) => dispatch => {
   .then(response => response.json())
   .then(respJson => {
     console.log('LyftETA call')
-    //LyftETA(respJson.access_token)
     console.log(respJson.access_token)
 
     fetch('https://api.lyft.com/v1/eta?lat=38.790163&lng=-90.532173&ride_type=lyft',{
@@ -144,24 +143,22 @@ export const etaAccesToken = (ClientID, ClientSecret) => dispatch => {
       console.log(respJson.eta_estimates)
       dispatch({
         type: ETA,
-        payload: respJson.eta_estimates
-        
-      });
-
-  })
+        payload: respJson.eta_estimates,
+      })
+      dispatch({
+        type: CANCEL_FETCHING
+      })
+    })
+    .catch(error => {
+      dispatch(
+        addError(error.message)
+      )
+  
+      dispatch({
+        type: CANCEL_FETCHING
+      })
+    })
     console.log('return')
-    //return AccToken = respJson.access_token
-    //console.log('LyftETA call')
-    LyftETA(respJson.access_token).then(
-      //console.log('hi')
-      response => {
-        console.log(response)
-      },
-      error => {
-        //throw error
-        console.log('error')
-      }
-    )
 
   })
   
@@ -174,9 +171,7 @@ export const etaAccesToken = (ClientID, ClientSecret) => dispatch => {
     dispatch({
       type: CANCEL_FETCHING
     })
-
   })
-  
 } 
 
 /* export const LyftETA = (AccToken) => dispatch => {

@@ -12,6 +12,8 @@ class Main extends Component {
     this.state = {
       secure: false,
       loading: false,
+      eta: null,
+      fetching: false,
     };
     this.getToken = this.getToken.bind(this);
     this.getView = this.getView.bind(this);
@@ -47,8 +49,8 @@ class Main extends Component {
   }
 
   getView() {
-    if (!this.state.secure) return <Public />;
-    return <Secure />;
+    if (!this.state.secure) return <Public {...route.passProps}/>;
+    return <Secure  {...route.passProps}/>;
   }
 
   render() {
@@ -56,9 +58,9 @@ class Main extends Component {
       return <Text>Loading...</Text>;
     }
     const getView = this.state.secure ? (
-      <Secure screenProps={{ logout: () => this.setState({ secure: false }) }} />
+      <Secure screenProps={{ logout: () => this.setState({ secure: false }) }}/>
     ) : (
-      <Public screenProps={{ login: () => this.setState({ secure: true }) }} />
+      <Public screenProps={{ login: () => this.setState({ secure: true }) }}/>
     );
     return (
       getView
